@@ -1,0 +1,28 @@
+{
+  "name": "@unkjd/public-npm-packages",
+  "version": "1.0.0",
+  "description": "A collection of public NPM packages by unkjd",
+  "private": true,
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unkjd/public-npm-packages/issues"
+  },
+  "homepage": "https://github.com/unkjd/public-npm-packages",
+  "main": "src/index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unkjd/public-npm-packages.git"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.4",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  }
+}

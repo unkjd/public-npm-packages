@@ -1,0 +1,19 @@
+{
+    "name": "@unkjd/app-pack",
+    "version": "1.0.0",
+    "description": "",
+    "main": "lib/main.js",
+    "scripts": {
+        "compile": "tsc"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@types/node": "^20.0.0",
+        "fastify": "^4.25.2"
+    },
+    "devDependencies": {
+        "typescript": "5.3.3"
+    }
+}
