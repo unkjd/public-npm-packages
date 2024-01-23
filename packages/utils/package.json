@@ -1,5 +1,5 @@
 {
-  "name": "@unkjd/app-pack",
+  "name": "@unkjd/utils",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -10,9 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@unkjd/utils": "^1.0.0",
-    "@types/node": "^20.0.0",
-    "fastify": "^4.25.2"
+    "@types/node": "^20.0.0"
   },
   "devDependencies": {
     "typescript": "5.3.3"
