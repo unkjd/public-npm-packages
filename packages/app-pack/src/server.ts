@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import Fastify, { FastifyInstance, FastifyServerOptions } from "fastify";
 import { sleep } from "@unkjd/utils";
+import { FastifyWithNotReadyStatus, installHealthzRoutes, setNotReadyStatus } from "./healthz-routes";
 
 type ServerOptions = {
   host: string;
@@ -21,13 +22,13 @@ const fastifyDefaultOptions: FastifyServerOptions = {
 
 export class Server {
   readonly config: ServerConfig;
-  readonly fastify: FastifyInstance & { shuttingDown?: boolean };
+  readonly fastify: FastifyWithNotReadyStatus;
   readonly abortController = new AbortController();
 
   constructor(options: ServerOptions) {
     this.config = this.configWithDefaults(options);
-    this.fastify = Fastify(this.config.fastifyOptions);
-    this.fastify.decorate("shuttingDown", false);
+    const fastify = Fastify(this.config.fastifyOptions);
+    this.fastify = installHealthzRoutes(fastify);
   }
 
   async start() {
@@ -36,7 +37,7 @@ export class Server {
   }
 
   async stop(reason?: string) {
-    this.fastify.shuttingDown = true;
+    setNotReadyStatus(this.fastify, reason || "shutting down");
     await sleep(this.config.gracefulShutdownDelay);
     await this.fastify.close();
   }
