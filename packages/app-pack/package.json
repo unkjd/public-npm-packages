@@ -1,8 +1,9 @@
 {
   "name": "@unkjd/app-pack",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "compile": "tsc",
     "test": "jest"

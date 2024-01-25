@@ -1,18 +1,18 @@
 {
   "name": "@unkjd/utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "compile": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@types/node": "^20.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "typescript": "5.3.3"
   }
 }
