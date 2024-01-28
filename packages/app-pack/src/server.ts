@@ -1,9 +1,9 @@
 import crypto from "crypto";
-import Fastify, { FastifyInstance, FastifyServerOptions } from "fastify";
+import Fastify, { FastifyServerOptions } from "fastify";
 import { sleep } from "@unkjd/utils";
 import { FastifyWithNotReadyStatus, installHealthzRoutes, setNotReadyStatus } from "./healthz-routes";
 
-type ServerOptions = {
+export type ServerOptions = {
   host: string;
   port: number;
   gracefulShutdownDelay?: number;
