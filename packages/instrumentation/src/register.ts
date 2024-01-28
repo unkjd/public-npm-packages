@@ -17,12 +17,18 @@ import * as opentelemetry from "@opentelemetry/sdk-node";
 import { diag, DiagConsoleLogger } from "@opentelemetry/api";
 import { getNodeAutoInstrumentations, getResourceDetectorsFromEnv, InstrumentationConfigMap } from "./utils";
 
-export function register(inputConfigs: InstrumentationConfigMap) {
+export type RegisterConfig = {
+  instrumentationConfigs?: InstrumentationConfigMap;
+  sampler?: opentelemetry.node.Sampler;
+};
+
+export function register({ instrumentationConfigs, sampler }: RegisterConfig) {
   diag.setLogger(new DiagConsoleLogger(), opentelemetry.core.getEnv().OTEL_LOG_LEVEL);
 
   const sdk = new opentelemetry.NodeSDK({
-    instrumentations: getNodeAutoInstrumentations(),
+    instrumentations: getNodeAutoInstrumentations(instrumentationConfigs),
     resourceDetectors: getResourceDetectorsFromEnv(),
+    sampler,
   });
 
   try {
@@ -35,10 +41,12 @@ export function register(inputConfigs: InstrumentationConfigMap) {
     );
   }
 
-  process.on("SIGTERM", () => {
-    sdk
+  return openTelemetryShutdown;
+
+  function openTelemetryShutdown(): Promise<void> {
+    return sdk
       .shutdown()
       .then(() => diag.debug("OpenTelemetry SDK terminated"))
       .catch(error => diag.error("Error terminating OpenTelemetry SDK", error));
-  });
+  }
 }
