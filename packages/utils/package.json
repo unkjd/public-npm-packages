@@ -11,7 +11,8 @@
     "package.json"
   ],
   "scripts": {
-    "compile": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": "",
