@@ -16,6 +16,9 @@
 import * as opentelemetry from "@opentelemetry/sdk-node";
 import { diag, DiagConsoleLogger } from "@opentelemetry/api";
 import { getNodeAutoInstrumentations, getResourceDetectorsFromEnv, InstrumentationConfigMap } from "./utils";
+import { PrometheusExporter } from "@opentelemetry/exporter-prometheus";
+
+const { UNKJD_METRICS } = process.env;
 
 export type RegisterConfig = {
   instrumentationConfigs?: InstrumentationConfigMap;
@@ -29,6 +32,7 @@ export function register({ instrumentationConfigs, sampler }: RegisterConfig) {
     instrumentations: getNodeAutoInstrumentations(instrumentationConfigs),
     resourceDetectors: getResourceDetectorsFromEnv(),
     sampler,
+    metricReader: UNKJD_METRICS ? new PrometheusExporter() : undefined,
   });
 
   try {

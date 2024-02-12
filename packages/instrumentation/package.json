@@ -1,6 +1,6 @@
 {
   "name": "@unkjd/instrumentation",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -23,6 +23,7 @@
   },
   "peerDependencies": {
     "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/exporter-prometheus": "^0.48.0",
     "@opentelemetry/instrumentation": "^0.48.0",
     "@opentelemetry/instrumentation-aws-sdk": "^0.37.2",
     "@opentelemetry/instrumentation-dataloader": "^0.5.4",
