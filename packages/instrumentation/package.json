@@ -12,8 +12,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build",
-    "test": "jest"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "author": "",

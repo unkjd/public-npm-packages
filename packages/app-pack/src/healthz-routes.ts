@@ -1,21 +1,15 @@
 import { FastifyInstance, RouteShorthandOptions } from "fastify";
-
-export type FastifyWithNotReadyStatus = FastifyInstance & { notReadyStatus: string };
-
-export function setNotReadyStatus(fastify: FastifyInstance, reason: string) {
-  (fastify as FastifyWithNotReadyStatus).notReadyStatus = reason;
-}
+import { ReadinessCheckFn } from "./server";
 
 export const healthzRouteOpts: RouteShorthandOptions = {
   logLevel: "silent",
 };
 
-export function installHealthzRoutes(fastify: FastifyInstance) {
-  fastify.decorate("notReadyStatus", "");
+export function installHealthzRoutes(fastify: FastifyInstance, readinessCheckFn: ReadinessCheckFn) {
   fastify.get("/healthz/readiness", healthzRouteOpts, async (_request, reply) => {
-    const status = (fastify as FastifyWithNotReadyStatus).notReadyStatus;
-    if (status) {
-      return reply.code(503).send({ status });
+    const [isReady, reason] = await readinessCheckFn();
+    if (!isReady) {
+      return reply.code(503).send({ status: "not ready", reason: reason });
     }
     return { status: "ok" };
   });
@@ -23,5 +17,5 @@ export function installHealthzRoutes(fastify: FastifyInstance) {
   fastify.get("/healthz/liveness", healthzRouteOpts, async () => {
     return { status: "ok" };
   });
-  return fastify as FastifyWithNotReadyStatus;
+  return fastify;
 }
